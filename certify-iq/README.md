@@ -159,10 +159,22 @@ npm run dev
 
 ```
 44 tests passing
-- tests/test_guardrails.py  (18 tests — all 25 guardrail rules)
-- tests/test_agents.py      (19 tests — all 10 agents)
-- tests/test_orchestrator.py (7 tests — SSE pipeline, loop-back, intervention)
+- tests/test_guardrails.py   (18 tests — all 25 guardrail rules)
+- tests/test_agents.py       (19 tests — all 10 agents)
+- tests/test_orchestrator.py  (7 tests — SSE pipeline, loop-back, intervention)
 ```
+
+## Real Azure Verification (v3.1)
+
+Verified 2026-06-07 with MOCK_MODE=false:
+
+| Layer | Status | Evidence |
+|-------|--------|---------|
+| Azure AI Search | **Connected** | `foundry_iq.connected: true`, 12 docs indexed |
+| GitHub Models GPT-4o | **Tier 1 active** | `tier_used: 1` on all 9 agents, 4.2s/call |
+| EMP-001 pipeline | **APPROACHING verdict** | All 9 agents completed, avg eval 0.72 |
+| EMP-003 pipeline | **NOT YET + intervention** | loop_back_triggered, intervention_alert fired |
+| pytest | **44/44 passing** | 2.97s |
 
 ---
 
@@ -189,12 +201,15 @@ AZURE_SEARCH_INDEX=learning-knowledge
 AZURE_AI_MODEL_DEPLOYMENT=gpt-4o
 OPENAI_API_VERSION=2024-02-01
 
-# Fallback keys
+# GitHub Models — Tier 1 LLM (GPT-4o)
+GITHUB_TOKEN=github_pat_...  # needs Models: Read permission
+
+# Fallback keys (Tier 2 & 3)
 OPENAI_API_KEY=sk-...
 ANTHROPIC_API_KEY=sk-ant-...
 
-# Mock mode (no API calls needed)
-MOCK_MODE=true
+# Mock mode (no API calls, <500ms)
+MOCK_MODE=true  # set false for real Azure mode
 ```
 
 ---
