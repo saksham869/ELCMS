@@ -196,3 +196,20 @@ ANTHROPIC_API_KEY=sk-ant-...
 # Mock mode (no API calls needed)
 MOCK_MODE=true
 ```
+
+---
+
+## AI-Assisted Development Disclosure
+
+This project was built with AI-assisted development tools
+as encouraged by the hackathon guidelines:
+
+| Tool | Usage |
+|------|-------|
+| GitHub Copilot (VS Code) | Agent scaffolding, FastAPI routes, TypeScript components |
+| Claude Code | Orchestrator logic, guardrail pipeline, SSE streaming |
+| Azure OpenAI GPT-4o | Runtime agent reasoning (production) |
+| Azure AI Search | Foundry IQ knowledge retrieval |
+
+All code represents meaningful human engineering decisions.
+AI tools accelerated implementation, not replaced judgment.

@@ -52,7 +52,8 @@ class LLMFallbackChain:
             )
             latency_ms = int((time.monotonic() - t0) * 1000)
             return {"response": resp.choices[0].message.content or "", "latency_ms": latency_ms}
-        except Exception:
+        except Exception as e:
+            print(f"Tier 1 failed: {e}")
             return None
 
     def _tier2_openai(self, prompt: str, system: str, context: str) -> Optional[dict]:

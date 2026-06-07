@@ -3,15 +3,13 @@ import time
 import json
 from datetime import datetime, timezone
 
-MOCK_MODE = os.getenv("MOCK_MODE", "false").lower() == "true"
-
-
 def _event(event_type: str, data: dict) -> str:
     return f"data: {json.dumps({'event': event_type, **data})}\n\n"
 
 
 def run_pipeline(employee: dict):
     """Generator that yields SSE events for the full 10-agent pipeline."""
+    MOCK_MODE = os.getenv("MOCK_MODE", "false").lower() == "true"
     if MOCK_MODE:
         from mock.mock_engine import MockEngine
         engine = MockEngine()

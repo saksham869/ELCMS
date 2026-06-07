@@ -39,7 +39,13 @@ class BaseAgent(ABC):
         ms_start = time.monotonic()
         employee_id = input_data.get("id", "unknown")
 
-        rai_input = guardrails.validate_input(str(input_data))
+        # Validate only core employee fields (not accumulated pipeline context)
+        # to avoid Rule 4 (max 2000 chars) false positives as context grows.
+        CORE_FIELDS = {"id", "name", "role", "certification_target", "current_practice_score",
+                       "hours_studied", "weeks_until_exam", "focus_hours_per_week",
+                       "meeting_hours_per_week", "starting_score", "team_id"}
+        core_data = {k: v for k, v in input_data.items() if k in CORE_FIELDS}
+        rai_input = guardrails.validate_input(str(core_data))
         if not rai_input["safe"]:
             return self._blocked_response(rai_input["reason"], loop_iteration)
 
