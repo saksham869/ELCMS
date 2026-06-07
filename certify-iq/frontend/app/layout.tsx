@@ -15,7 +15,7 @@ function Footer() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <div>
           <span className="text-[#6e7681] text-xs">CertifyIQ</span>
-          <span className="text-[#6e7681] text-xs ml-2">© 2026 · Microsoft Agents League Hackathon</span>
+          <span className="text-[#6e7681] text-xs ml-2">© 2026</span>
         </div>
         <span className="text-[#6e7681] text-xs">Built on Azure AI Foundry IQ</span>
         <div className="flex items-center gap-4">
