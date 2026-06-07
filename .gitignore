@@ -13,3 +13,4 @@ audit_log.jsonl
 .DS_Store
 node_modules/
 .next/
+*.tsbuildinfo
