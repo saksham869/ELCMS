@@ -4,7 +4,7 @@ import uuid
 from abc import ABC, abstractmethod
 from datetime import datetime, timezone
 
-from openai import AzureOpenAI
+from openai import OpenAI
 from audit.audit_logger import audit_logger
 from responsible_ai.guardrails import guardrails, TRANSPARENCY_NOTE
 from evaluation.agent_evaluator import evaluator
@@ -20,13 +20,18 @@ class BaseAgent(ABC):
         self._model = os.getenv("AZURE_AI_MODEL_DEPLOYMENT", "gpt-4o")
 
     def _get_client(self):
-        """Lazy initialization of AzureOpenAI client."""
         if self._client is None:
-            self._client = AzureOpenAI(
-                azure_endpoint=os.getenv("AZURE_AI_PROJECT_ENDPOINT", "https://placeholder.openai.azure.com"),
-                api_key=os.getenv("AZURE_SEARCH_KEY", "placeholder"),
-                api_version=os.getenv("OPENAI_API_VERSION", "2024-02-01"),
-            )
+            github_token = os.getenv("GITHUB_TOKEN", "")
+            if github_token:
+                self._client = OpenAI(
+                    base_url="https://models.inference.ai.azure.com",
+                    api_key=github_token,
+                )
+            else:
+                self._client = OpenAI(
+                    base_url="https://models.inference.ai.azure.com",
+                    api_key="no-token",
+                )
         return self._client
 
     @abstractmethod

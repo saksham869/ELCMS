@@ -32,12 +32,16 @@ class LLMFallbackChain:
         return self._tier4_mock(prompt)
 
     def _tier1_azure(self, prompt: str, system: str, context: str) -> Optional[dict]:
+        # GitHub Models GPT-4o — uses GITHUB_TOKEN as API key
+        github_token = os.getenv("GITHUB_TOKEN", "")
+        if not github_token:
+            print("Tier 1 skipped: GITHUB_TOKEN not set")
+            return None
         try:
-            from openai import AzureOpenAI
-            client = AzureOpenAI(
-                azure_endpoint=os.getenv("AZURE_AI_PROJECT_ENDPOINT", ""),
-                api_key=os.getenv("AZURE_SEARCH_KEY", ""),
-                api_version=os.getenv("OPENAI_API_VERSION", "2024-02-01"),
+            from openai import OpenAI
+            client = OpenAI(
+                base_url="https://models.inference.ai.azure.com",
+                api_key=github_token,
             )
             t0 = time.monotonic()
             resp = client.chat.completions.create(
@@ -53,7 +57,7 @@ class LLMFallbackChain:
             latency_ms = int((time.monotonic() - t0) * 1000)
             return {"response": resp.choices[0].message.content or "", "latency_ms": latency_ms}
         except Exception as e:
-            print(f"Tier 1 failed: {e}")
+            print(f"Tier 1 (GitHub Models) failed: {e}")
             return None
 
     def _tier2_openai(self, prompt: str, system: str, context: str) -> Optional[dict]:
