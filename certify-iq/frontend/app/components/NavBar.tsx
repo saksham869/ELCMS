@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const NAV_ITEMS = [
   { label: "Overview", href: "/" },
@@ -18,6 +18,12 @@ function isActive(pathname: string, href: string): boolean {
 
 export default function NavBar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleSignOut = () => {
+    document.cookie = 'certifyiq-auth=; path=/; max-age=0'
+    router.push('/login')
+  };
 
   return (
     <nav
@@ -57,7 +63,7 @@ export default function NavBar() {
           <div className="w-px h-4 bg-[#21262d]" />
           <span className="text-[#8b949e] text-xs">Demo User</span>
           <span className="text-[#21262d]">|</span>
-          <button className="text-[#6e7681] text-xs hover:text-[#f0f6fc] transition-colors cursor-pointer">
+          <button onClick={handleSignOut} className="text-[#6e7681] text-xs hover:text-[#f0f6fc] transition-colors cursor-pointer">
             Sign out
           </button>
         </div>
