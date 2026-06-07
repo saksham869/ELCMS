@@ -9,24 +9,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        navy: {
-          900: "#0a0f1e",
-          800: "#0d1429",
-          700: "#111827",
-          600: "#1a2235",
+        surface: {
+          base: "#030712",
+          raised: "#0d1117",
+          overlay: "#161b22",
+          border: "#21262d",
+          muted: "#30363d",
         },
-        brand: {
-          blue: "#3b82f6",
-          purple: "#8b5cf6",
-          green: "#10b981",
-          orange: "#f59e0b",
-          teal: "#14b8a6",
-          red: "#ef4444",
+        text: {
+          primary: "#f0f6fc",
+          secondary: "#8b949e",
+          muted: "#6e7681",
+          link: "#58a6ff",
+        },
+        accent: {
+          blue: "#1f6feb",
+          "blue-hover": "#388bfd",
+          green: "#238636",
+          "green-bright": "#3fb950",
+          amber: "#9e6a03",
+          "amber-bright": "#d29922",
+          red: "#da3633",
+          "red-bright": "#f85149",
+          purple: "#6e40c9",
+          "purple-bright": "#a371f7",
         },
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      fontFamily: {
+        sans: ["Inter", "system-ui", "-apple-system", "sans-serif"],
+        mono: ["JetBrains Mono", "Fira Code", "Consolas", "monospace"],
       },
     },
   },

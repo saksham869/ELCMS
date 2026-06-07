@@ -141,8 +141,9 @@ class BaseAgent(ABC):
         }
 
     def _call_gpt(self, system_prompt: str, user_prompt: str) -> str:
+        token_q = getattr(self, "_token_queue", None)
         try:
-            response = self._get_client().chat.completions.create(
+            stream = self._get_client().chat.completions.create(
                 model=self._model,
                 messages=[
                     {"role": "system", "content": system_prompt},
@@ -150,7 +151,17 @@ class BaseAgent(ABC):
                 ],
                 temperature=0.3,
                 max_tokens=1000,
+                stream=True,
             )
-            return response.choices[0].message.content or ""
+            full_text = ""
+            for chunk in stream:
+                if not chunk.choices:
+                    continue
+                token = chunk.choices[0].delta.content or ""
+                if token:
+                    if token_q is not None:
+                        token_q.put(token)
+                    full_text += token
+            return full_text
         except Exception as e:
             return f"[GPT unavailable — using structured fallback. Error: {str(e)[:80]}]"
