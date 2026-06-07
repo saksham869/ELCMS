@@ -1,0 +1,15 @@
+.idea/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+audit_log.jsonl
+*/.env
+**/backend/.env
+**/frontend/.env.local
+**/node_modules/
+**/.next/
+*.egg-info/
+.DS_Store
+node_modules/
+.next/
