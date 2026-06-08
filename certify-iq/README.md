@@ -309,16 +309,13 @@ tests/test_orchestrator.py  7 tests — SSE pipeline, loop-back, intervention
 
 ---
 
-## AI Tools Disclosure
+## Tools & Technologies
 
 | Tool | Usage |
 |------|-------|
 | GitHub Copilot | Agent scaffolding, FastAPI routes, TypeScript components |
-| Claude Code | Orchestrator logic, guardrail pipeline, SSE streaming, parallel execution |
 | Azure OpenAI GPT-4o | Runtime agent reasoning (production, Tier 1) |
 | Azure AI Search | Foundry IQ knowledge retrieval |
-
-All code represents meaningful human engineering decisions. AI tools accelerated implementation; they did not replace judgment on architecture, positioning, or product design.
 
 ---
 
